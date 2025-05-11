@@ -1,3 +1,7 @@
+logging:
+  level:
+    org.springframework: info
+
 spring:
   application:
     name: catalog-service
@@ -11,23 +15,26 @@ spring:
         format_sql: true
     generate-ddl: false
     open-in-view: false
-  datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/catalog
+    password: postgres
+    username: postgres
+    pool:
+      enabled: true
+      max-acquire-time: 20s
+      initial-size: 10
+      max-idle-time: 30s
+      max-size: 20
+      max-create-connection-time: 30s
+  liquibase:
+    user: postgres
     driver-class-name: org.postgresql.Driver
-    hikari:
-      jdbc-url: ${DB_URL}
-      auto-commit: false
-      driver-class-name: org.postgresql.Driver
-      pool-name: HikariPool
-      maximum-pool-size: 20
-      minimum-idle: 10
-      max-lifetime: 1800000
-      idle-timeout: 300000
-      connection-timeout: 30000
-      validation-timeout: 5000
-      leak-detection-threshold: 2000
+    change-log: classpath:db/changelog/changelog-master.yaml
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/catalog
+    enabled: true
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 9001
   shutdown: graceful

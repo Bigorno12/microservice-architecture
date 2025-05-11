@@ -36,105 +36,27 @@ databaseChangeLog:
                   type: numeric
             tableName: product
   - changeSet:
-      id: create-order-1
-      author: pranav
+      id: insert-product-1
+      author: psy (generated)
       changes:
-        - createTable:
+        - insert:
+            tableName: product
             columns:
               - column:
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: order_pkey
                   name: id
-                  type: bigint
+                  valueNumeric: 1
               - column:
-                  constraints:
-                    unique: true
-                    nullable: false
-                  name: order_number
-                  type: text
+                  name: code
+                  value: 'SKU-001'
               - column:
-                  constraints:
-                    nullable: false
-                  name: customer_name
-                  type: text
+                  name: name
+                  value: 'Firework'
               - column:
-                  constraints:
-                    nullable: false
-                  name: customer_email
-                  type: text
+                  name: image_url
+                  type: 'https://unsplash.com/photos/red-fireworks-in-night-sky-qfJlZRGR7Bw'
               - column:
-                  constraints:
-                    nullable: false
-                  name: customer_phone
-                  type: text
+                  name: description
+                  type: 'Big Firework'
               - column:
-                  constraints:
-                    nullable: false
-                  name: delivery_address
-                  type: text
-              - column:
-                  constraints:
-                    nullable: false
-                  name: product_code
-                  type: text
-              - column:
-                  constraints:
-                    nullable: false
-                  name: product_name
-                  type: text
-              - column:
-                  constraints:
-                    nullable: false
-                  name: product_price
-                  type: text
-              - column:
-                  constraints:
-                    nullable: false
-                  name: quantity
-                  type: int
-              - column:
-                  constraints:
-                    nullable: false
-                  name: status
-                  type: text
-              - column:
-                  name: comments
-                  type: text
-              - column:
-                  constraints:
-                    nullable: false
-                  name: created_date
-                  type: timestamp
-              - column:
-                  constraints:
-                    nullable: false
-                  name: last_modified_date
-                  type: timestamp
-            tableName: orders
-  - changeSet:
-      id: create-inventory-1
-      author: pranav
-      changes:
-        - createTable:
-            columns:
-              - column:
-                  constraints:
-                    nullable: false
-                    primaryKey: true
-                    primaryKeyName: inventory_pkey
-                  name: id
-                  type: bigint
-              - column:
-                  constraints:
-                    unique: true
-                    nullable: false
-                  name: product_code
-                  type: text
-              - column:
-                  constraints:
-                    nullable: false
-                  name: quantity
-                  type: bigint
-            tableName: inventory
+                  name: price
+                  valueNumeric: 99.99
