@@ -8,8 +8,11 @@ import mu.elca.catalog.entity.Product;
 import mu.elca.catalog.exception.ProductAlreadyExistException;
 import mu.elca.catalog.exception.ProductNotFound;
 import mu.elca.catalog.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -49,4 +52,20 @@ public class ProductService {
                         .build()
                 );
     }
+
+    @Transactional(readOnly = true)
+    public Flux<Page<ProductView>> findProductsByCodeIgnoreCase(Pageable pageable, String code) {
+        return productRepository.findProductsByCodeIgnoreCaseContaining(code, pageable)
+                .switchIfEmpty(Mono.error(new ProductNotFound("Products not Found")))
+                .mapNotNull(products -> products.map(product -> ProductView.builder()
+                        .id(product.id())
+                        .code(product.code())
+                        .name(product.name())
+                        .imageUrl(product.imageUrl())
+                        .description(product.description())
+                        .price(product.price())
+                        .build())
+                );
+    }
+
 }
