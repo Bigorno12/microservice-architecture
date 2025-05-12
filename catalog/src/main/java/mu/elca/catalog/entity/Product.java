@@ -16,7 +16,6 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Product {
 
     @Id
-    @NotNull
     private Long id;
 
     @NotNull

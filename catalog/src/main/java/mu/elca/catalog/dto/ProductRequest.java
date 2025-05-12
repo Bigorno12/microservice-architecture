@@ -1,11 +1,7 @@
 package mu.elca.catalog.dto;
 
-public record ProductRequest(Long id, String code, String name, String imageUrl, String description, Double price) {
+public record ProductRequest(String code, String name, String imageUrl, String description, Double price) {
     public ProductRequest {
-        if (id == null) {
-            throw new IllegalArgumentException("id cannot be null");
-        }
-
         if (code == null) {
             throw new IllegalArgumentException("code cannot be null");
         }

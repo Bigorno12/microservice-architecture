@@ -36,27 +36,14 @@ databaseChangeLog:
                   type: numeric
             tableName: product
   - changeSet:
-      id: insert-product-1
+      id: addAutoIncrement
       author: psy (generated)
       changes:
-        - insert:
+        - addAutoIncrement:
+            columnName: id
+            columnDataType: bigint
+            generationType: SERIAL
+            defaultOnNull: false
+            incrementBy: 1
+            startWith: 1
             tableName: product
-            columns:
-              - column:
-                  name: id
-                  valueNumeric: 1
-              - column:
-                  name: code
-                  value: 'SKU-001'
-              - column:
-                  name: name
-                  value: 'Firework'
-              - column:
-                  name: image_url
-                  type: 'https://unsplash.com/photos/red-fireworks-in-night-sky-qfJlZRGR7Bw'
-              - column:
-                  name: description
-                  type: 'Big Firework'
-              - column:
-                  name: price
-                  valueNumeric: 99.99
