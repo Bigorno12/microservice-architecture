@@ -1,0 +1,211 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-order-1
+      author: pranav
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_pkey
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    unique: true
+                    nullable: false
+                  name: order_number
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: username
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_name
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_phone
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: customer_email
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: delivery_address_line1
+                  type: text
+              - column:
+                  name: delivery_address_line2
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: delivery_address_city
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: delivery_address_state
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: delivery_address_zip_code
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: delivery_address_country
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: text
+              - column:
+                  name: comments
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_modified_date
+                  type: timestamp
+            tableName: orders
+  - changeSet:
+      id: create-order-item-1
+      author: pranav
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_item_pkey
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                  name: code
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: price
+                  type: numeric
+              - column:
+                  constraints:
+                    nullable: false
+                  name: quantity
+                  type: int
+              - column:
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_id
+                    references: orders(id)
+                  name: order_id
+                  type: bigint
+            tableName: order_items
+  - changeSet:
+      id: create-order-event-1
+      author: pranav
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: order_number_pkey
+                  name: id
+                  type: bigint
+              - column:
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_order_number
+                    references: orders(order_number)
+                  name: order_number
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                    unique: true
+                  name: event_id
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: event_type
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: payload
+                  type: text
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_date
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: last_modified_date
+                  type: timestamp
+            tableName: order_events
+  - changeSet:
+      id: addAutoIncrementOrder
+      author: psy (generated)
+      changes:
+        - addAutoIncrement:
+            columnName: id
+            columnDataType: bigint
+            generationType: SERIAL
+            defaultOnNull: false
+            incrementBy: 1
+            startWith: 1
+            tableName: orders
+  - changeSet:
+      id: addAutoIncrementItem
+      author: psy (generated)
+      changes:
+        - addAutoIncrement:
+            columnName: id
+            columnDataType: bigint
+            generationType: SERIAL
+            defaultOnNull: false
+            incrementBy: 1
+            startWith: 1
+            tableName: order_items
+  - changeSet:
+      id: addAutoIncrementEvent
+      author: psy (generated)
+      changes:
+        - addAutoIncrement:
+            columnName: id
+            columnDataType: bigint
+            generationType: SERIAL
+            defaultOnNull: false
+            incrementBy: 1
+            startWith: 1
+            tableName: order_events

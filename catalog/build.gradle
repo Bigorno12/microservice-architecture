@@ -34,6 +34,7 @@ ext {
     set('liquibase_hibernate', "4.31.1")
     set('micrometerRegistryPrometheus', "1.14.6")
     set('liquibaseR2dbc', "3.1.3")
+    set('openAPIWebflux', "2.8.6")
 }
 
 dependencies {
@@ -64,6 +65,9 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "io.projectreactor:reactor-test"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+
+    //Openapi
+    implementation "org.springdoc:springdoc-openapi-starter-webflux-api:${openAPIWebflux}"
 
 }
 

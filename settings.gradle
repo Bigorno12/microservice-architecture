@@ -2,3 +2,4 @@ rootProject.name = 'microservice'
 
 include 'order'
 include 'catalog'
+include 'api-gateway'

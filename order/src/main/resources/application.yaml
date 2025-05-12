@@ -8,13 +8,9 @@ management:
       exposure:
         include: ["prometheus", "health"]
 
-springdoc:
-  api-docs:
-    path: /api-docs
-
 spring:
   application:
-    name: catalog-service
+    name: order-service
   threads:
     virtual:
       enabled: true
@@ -26,7 +22,7 @@ spring:
     generate-ddl: false
     open-in-view: false
   r2dbc:
-    url: r2dbc:postgresql://localhost:15432/catalog
+    url: r2dbc:postgresql://localhost:25432/orders
     password: postgres
     username: postgres
     pool:
@@ -39,12 +35,24 @@ spring:
   liquibase:
     user: postgres
     driver-class-name: org.postgresql.Driver
-    change-log: classpath:db/changelog/changelog-master.yaml
+    change-log: classpath:/db/migration/changelog-master.yaml
     password: postgres
-    url: jdbc:postgresql://localhost:15432/catalog
+    url: jdbc:postgresql://localhost:25432/orders
     enabled: true
   main:
     allow-bean-definition-overriding: true
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 server:
-  port: 9001
+  port: 9002
   shutdown: graceful
+orders:
+  catalog-service-url: http://localhost:8081
+  order-events-exchange: orders-exchange
+  new-orders-queue: new-orders
+  delivered-orders-queue: delivered-orders
+  cancelled-orders-queue: cancelled-orders
+  error-orders-queue: error-orders
