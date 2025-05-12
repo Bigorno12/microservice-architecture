@@ -1,5 +1,7 @@
 package mu.elca.order.client.catalog;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class ProductServiceClient {
         this.webClient = webClient;
     }
 
+    @CircuitBreaker(name = "catalog-service")
+    @Retry(name = "catalog-service", fallbackMethod = "getProductFallBack")
     public Mono<ProductView> getProductCode(String code) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
@@ -25,5 +29,10 @@ public class ProductServiceClient {
                 )
                 .retrieve()
                 .bodyToMono(ProductView.class);
+    }
+
+    Mono<ProductView> getProductFallBack(String productCode, Throwable throwable) {
+        log.error("Product Code: {}", productCode, throwable);
+        return Mono.empty();
     }
 }
