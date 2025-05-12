@@ -37,7 +37,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.findProductById(id));
     }
 
-    @GetMapping("productByCode")
+    @GetMapping("/productsByCode")
     public ResponseEntity<Mono<Page<ProductView>>> retrieveAllProductsByCode(@RequestParam(name = "pageNum", defaultValue = "0") Integer pageNum, @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize, @RequestParam(name = "code") String code) {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(productService.findProductsByCodeIgnoreCase(PageRequest.of(pageNum, pageSize, Sort.by(Sort.Direction.ASC, "code")), code));
@@ -51,6 +51,11 @@ public class ProductController {
     @GetMapping("/all-products")
     public ResponseEntity<Flux<ProductView>> retrieveAllProducts() {
         return ResponseEntity.status(HttpStatus.OK).body(productService.findAllProducts());
+    }
+
+    @GetMapping("/find-product")
+    public ResponseEntity<Mono<ProductView>> retrieveProductByCode(@RequestParam(name = "code") String code) {
+        return ResponseEntity.status(HttpStatus.OK).body(productService.findProductByCode(code));
     }
 
 }

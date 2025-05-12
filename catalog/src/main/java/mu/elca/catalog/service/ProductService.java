@@ -98,4 +98,18 @@ public class ProductService {
                 .onBackpressureBuffer(100);
     }
 
+    @Transactional(readOnly = true)
+    public Mono<ProductView> findProductByCode(String code) {
+        return productRepository.findProductByCodeIgnoreCase(code)
+                .switchIfEmpty(Mono.error(new ProductNotFound("Product Not found for Code: " + code)))
+                .map(product -> ProductView.builder()
+                        .id(product.id())
+                        .code(product.code())
+                        .name(product.name())
+                        .imageUrl(product.imageUrl())
+                        .description(product.description())
+                        .price(product.price())
+                        .build());
+    }
+
 }
