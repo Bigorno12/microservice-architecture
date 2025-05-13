@@ -36,6 +36,7 @@ ext {
     set('openAPIWebflux', "2.8.6")
     set('resilience4j', "2.3.0")
     set('r2dbcPostgresql', "1.0.7.RELEASE")
+    set('openAPIWebflux', "2.0.4")
 }
 
 dependencies {
@@ -67,6 +68,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-aop"
     //messenger broker
     implementation "org.springframework.boot:spring-boot-starter-amqp"
+    //Openapi
+    implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${openAPIWebflux}"
 
 }
 

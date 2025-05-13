@@ -13,8 +13,11 @@ management:
         include: ["prometheus", "health"]
 
 springdoc:
+  swagger-ui:
+    enabled: true
+    path: /v1/${spring.application.name}/swagger-ui.html
   api-docs:
-    path: /api-docs
+    path: /v1/catalog-service-docs
 
 spring:
   application:
