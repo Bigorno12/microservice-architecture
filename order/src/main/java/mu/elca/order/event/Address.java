@@ -1,7 +1,9 @@
 package mu.elca.order.event;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 
+@Builder
 public record Address(
         @NotBlank(message = "AddressLine1 is required") String addressLine1,
         String addressLine2,

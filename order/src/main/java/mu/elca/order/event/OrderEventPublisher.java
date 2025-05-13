@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import mu.elca.order.ApplicationProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Configuration;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Configuration
@@ -13,23 +14,11 @@ public class OrderEventPublisher {
     private final RabbitTemplate rabbitTemplate;
     private final ApplicationProperties properties;
 
-    public void publish(OrderCreatedEvent event) {
-        this.send(properties.newOrdersQueue(), event);
+    public Mono<Void> publish(OrderCreatedEvent event) {
+        return this.send(properties.newOrdersQueue(), event);
     }
 
-    public void publish(OrderDeliveredEvent event) {
-        this.send(properties.deliveredOrdersQueue(), event);
-    }
-
-    public void publish(OrderCancelledEvent event) {
-        this.send(properties.cancelledOrdersQueue(), event);
-    }
-
-    public void publish(OrderErrorEvent event) {
-        this.send(properties.errorOrdersQueue(), event);
-    }
-
-    private void send(String routingKey, Object payload) {
-        rabbitTemplate.convertAndSend(properties.orderEventsExchange(), routingKey, payload);
+    private Mono<Void> send(String routingKey, Object payload) {
+        return Mono.create(voidMonoSink -> rabbitTemplate.convertAndSend(routingKey, payload)).then();
     }
 }

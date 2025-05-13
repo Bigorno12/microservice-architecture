@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import mu.elca.order.enumeration.EventType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -30,7 +31,7 @@ public class OrderEvent {
     private String eventId;
 
     @NotNull
-    private String eventType;
+    private EventType eventType;
 
     @NotNull
     private String payload;

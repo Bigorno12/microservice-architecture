@@ -1,14 +1,11 @@
 package mu.elca.order.event;
 
-import mu.elca.order.entity.OrderItem;
+import lombok.Builder;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-
+@Builder
 public record OrderCreatedEvent(
         String eventId,
         String orderNumber,
-        Set<OrderItem> items,
         Customer customer,
-        Address deliveryAddress,
-        LocalDateTime createdAt) {}
+        Address deliveryAddress) {
+}
