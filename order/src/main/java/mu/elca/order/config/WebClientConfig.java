@@ -1,4 +1,4 @@
-package mu.elca.order.client;
+package mu.elca.order.config;
 
 import io.netty.channel.ChannelOption;
 import io.netty.handler.timeout.ReadTimeoutHandler;
@@ -12,7 +12,7 @@ import reactor.netty.http.client.HttpClient;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-public class WebClientCatalogConfig {
+public class WebClientConfig {
 
     @Bean("webClientCatalog")
     public WebClient webClientCatalogConfig(WebClient.Builder builder, ApplicationProperties properties) {

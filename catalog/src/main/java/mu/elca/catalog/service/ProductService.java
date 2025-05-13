@@ -109,7 +109,8 @@ public class ProductService {
                         .imageUrl(product.imageUrl())
                         .description(product.description())
                         .price(product.price())
-                        .build());
+                        .build()
+                );
     }
 
 }
