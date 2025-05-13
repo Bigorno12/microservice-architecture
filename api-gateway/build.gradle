@@ -1,19 +1,65 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '3.4.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id "io.freefair.lombok" version "8.13.1"
 }
 
 group = 'mu.elca'
 version = '0.0.1-SNAPSHOT'
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
 repositories {
     mavenCentral()
 }
 
+ext {
+    set('micrometerRegistryPrometheus', "1.14.6")
+    set('openAPIWebflux', "2.8.6")
+    set('springCloud', "2024.0.1")
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    //Cloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    //Test
+    testImplementation "io.projectreactor:reactor-test"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+
+    // Actuator
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "io.micrometer:micrometer-registry-prometheus:${micrometerRegistryPrometheus}"
+
+    //Openapi
+    implementation "org.springdoc:springdoc-openapi-starter-webflux-api:${openAPIWebflux}"
+//    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8"
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloud}"
+    }
 }
 
 test {
     useJUnitPlatform()
+}
+
+springBoot {
+    buildInfo()
 }

@@ -1,3 +1,7 @@
+server:
+  port: 9002
+  shutdown: graceful
+
 logging:
   level:
     org.springframework: info
@@ -46,9 +50,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-server:
-  port: 9002
-  shutdown: graceful
+
 orders:
   catalog-service-url: http://localhost:9001
   order-events-exchange: orders-exchange
@@ -56,6 +58,7 @@ orders:
   delivered-orders-queue: delivered-orders
   cancelled-orders-queue: cancelled-orders
   error-orders-queue: error-orders
+
 resilience4j:
   retry:
     backends:
