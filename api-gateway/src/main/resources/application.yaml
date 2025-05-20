@@ -21,7 +21,7 @@ management:
 
 spring:
   application:
-    name: api-gateway
+    name: shop-api-gateway
   cloud:
     gateway:
       discovery:
@@ -40,19 +40,25 @@ spring:
           predicates:
             - Path=/catalog/**
           filters:
-            - RewritePath=/v1/product/?(?<segment>.*), /${segment}
+            - RewritePath=/catalog/?(?<segment>.*), /${segment}
         - id: orders-service
           uri: http://localhost:9002
           predicates:
             - Path=/order/**
           filters:
-            - RewritePath=/v1/order/?(?<segment>.*), /${segment}
+            - RewritePath=/order/?(?<segment>.*), /${segment}
         - id: openapi
           uri: http://localhost:${server.port}
           predicates:
             - Path=/v3/api-docs/**
           filters:
             - RewritePath=/v3/api-docs/?(?<segment>.*), /${segment}/v3/api-docs
+        - id: swagger-ui
+          uri: http://localhost:${server.port}
+          predicates:
+            - Path=/swagger-ui/**
+          filters:
+            - RewritePath=/swagger-ui/?(?<segment>.*), /swagger-ui/${segment}
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Methods Access-Control-Allow-Headers RETAIN_FIRST
   mvc:
@@ -63,7 +69,8 @@ springdoc:
   swagger-ui:
     use-root-path: true
     urls:
-      - name: product
-        url: /v3/api-docs/
+      - name: catalog
+        url: /v3/api-docs/catalog
       - name: orders
-        url: /v3/api-docs/
+        url: /v3/api-docs/order
+    enabled: true

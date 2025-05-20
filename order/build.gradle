@@ -36,7 +36,7 @@ ext {
     set('openAPIWebflux', "2.8.6")
     set('resilience4j', "2.3.0")
     set('r2dbcPostgresql', "1.0.7.RELEASE")
-    set('openAPIWebflux', "2.0.4")
+    set('openAPIWebflux', "2.8.6")
 }
 
 dependencies {
